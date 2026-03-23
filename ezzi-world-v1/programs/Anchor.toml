@@ -1,0 +1,28 @@
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+ezzi_nft = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+ezzi_marketplace = "HjrMEZ7aWLFrX7t1L9p1Q7JkG1f7b7r9q7Y9Z9p9k9p9"
+ezzi_token = "ToKLxTk67d7b7r9q7Y9Z9p9k9p9k9p9k9p9k9p9k9p9"
+
+[programs.devnet]
+ezzi_nft = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+ezzi_marketplace = "HjrMEZ7aWLFrX7t1L9p1Q7JkG1f7b7r9q7Y9Z9p9k9p9"
+ezzi_token = "ToKLxTk67d7b7r9q7Y9Z9p9k9p9k9p9k9p9k9p9k9p9"
+
+[programs.mainnet]
+ezzi_nft = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+ezzi_marketplace = "HjrMEZ7aWLFrX7t1L9p1Q7JkG1f7b7r9q7Y9Z9p9k9p9"
+ezzi_token = "ToKLxTk67d7b7r9q7Y9Z9p9k9p9k9p9k9p9k9p9k9p9"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = ".config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

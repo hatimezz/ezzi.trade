@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* ═══════════════════════════════════════════════
+   EZZI WORLD DESIGN SYSTEM — v2 FINAL
+   Cyber-Ancient Civilization · Telegram Mini App
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --bg:        #02020a;
+  --bg2:       #06060f;
+  --bg3:       #0a0a1a;
+  --gold:      #ffd700;
+  --gold2:     #f0c000;
+  --gold-glow: rgba(255, 215, 0, 0.15);
+  --ezzi:      #00d4ff;
+  --ezzi-glow: rgba(0, 212, 255, 0.2);
+  --void:      #cc00ff;
+  --fire:      #ff3300;
+  --ocean:     #0080ff;
+  --forest:    #00ff9f;
+  --z1: #00ff9f; --z2: #ff8c00; --z3: #0080ff;
+  --z4: #ff3300; --z5: #a8d8ff; --z6: #cc00ff;
+  --rc: #8a9bb0; --rr: #4d9fff; --re: #b44dff;
+  --rl: #ffd700; --rm: #ff00c8;
+  --t1: #ffffff;
+  --t2: rgba(255,255,255,0.65);
+  --t3: rgba(255,255,255,0.35);
+  --t4: rgba(255,255,255,0.18);
+  --b1: rgba(255,255,255,0.08);
+  --b-gold: rgba(255,215,0,0.18);
+  --b-ezzi: rgba(0,212,255,0.15);
+  --font-display: 'Rajdhani', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --pad: 16px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background-color: var(--bg);
+  color: var(--t1);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grid backgrounds */
+.grid-bg-cyan { background-image: linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px); background-size: 22px 22px; }
+.grid-bg-void { background-image: linear-gradient(rgba(204,0,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(204,0,255,.025) 1px,transparent 1px); background-size: 22px 22px; }
+.grid-bg-gold { background-image: linear-gradient(rgba(255,215,0,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,.025) 1px,transparent 1px); background-size: 22px 22px; }
+.grid-bg-fire { background-image: linear-gradient(rgba(255,51,0,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,51,0,.025) 1px,transparent 1px); background-size: 22px 22px; }
+
+/* Bottom nav */
+.bottom-nav { display: flex; border-top: 1px solid rgba(255,215,0,0.06); background: rgba(6,6,15,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding-bottom: env(safe-area-inset-bottom,0); }
+.nav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 4px 10px; cursor:pointer; opacity:.35; transition:opacity .15s; background:none; border:none; -webkit-tap-highlight-color:transparent; }
+.nav-item.active { opacity:1; }
+.nav-icon { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:14px; border:1px solid transparent; transition:all .15s; }
+.nav-item.active .nav-icon { background:rgba(255,215,0,.07); border-color:rgba(255,215,0,.2); }
+.nav-label { font-size:7px; letter-spacing:.08em; color:rgba(255,255,255,.35); text-transform:uppercase; }
+.nav-item.active .nav-label { color:var(--gold); }
+
+/* Header */
+.app-header { display:flex; align-items:center; justify-content:space-between; padding:14px var(--pad) 0; position:relative; z-index:3; }
+.header-logo-img { width:34px; height:34px; object-fit:contain; border-radius:8px; }
+.header-title { font-family:var(--font-display); font-size:16px; font-weight:700; color:var(--gold); letter-spacing:.12em; }
+.header-subtitle { font-size:9px; color:var(--t3); letter-spacing:.08em; margin-top:1px; }
+.header-balance-label { font-size:8px; color:var(--t3); letter-spacing:.12em; }
+.header-balance-value { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--ezzi); line-height:1; }
+
+/* Cards */
+.card { border-radius:var(--radius); border:1px solid var(--b1); background:rgba(255,255,255,.02); padding:var(--pad); }
+.card-gold { border-color:var(--b-gold); background:rgba(255,215,0,.03); }
+.card-ezzi { border-color:var(--b-ezzi); background:rgba(0,212,255,.03); }
+
+/* Badges */
+.badge { display:inline-flex; align-items:center; border-radius:20px; padding:3px 10px; font-size:9px; letter-spacing:.1em; font-weight:700; border:1px solid; }
+.badge-gold { background:rgba(255,215,0,.08); border-color:rgba(255,215,0,.22); color:var(--gold); }
+.badge-ezzi { background:rgba(0,212,255,.08); border-color:rgba(0,212,255,.22); color:var(--ezzi); }
+.badge-void { background:rgba(204,0,255,.08); border-color:rgba(204,0,255,.22); color:var(--void); }
+.badge-rare     { background:rgba(77,159,255,.12);  color:#4d9fff; border-color:rgba(77,159,255,.22); }
+.badge-epic     { background:rgba(180,77,255,.12);  color:#b44dff; border-color:rgba(180,77,255,.22); }
+.badge-legendary{ background:rgba(255,215,0,.12);   color:#ffd700; border-color:rgba(255,215,0,.22); }
+.badge-mythic   { background:rgba(255,0,200,.12);   color:#ff00c8; border-color:rgba(255,0,200,.22); }
+
+/* Stat cells */
+.stat-cell { background:rgba(0,212,255,.03); border:1px solid rgba(0,212,255,.08); border-radius:var(--radius-sm); padding:9px 6px; text-align:center; }
+.stat-value { font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--ezzi); line-height:1; }
+.stat-label { font-size:7px; color:var(--t3); letter-spacing:.12em; margin-top:3px; text-transform:uppercase; }
+
+/* Section label */
+.section-label { font-size:8px; color:var(--t4); letter-spacing:.14em; text-transform:uppercase; margin-bottom:7px; }
+
+/* Pulse banner */
+.pulse-banner { margin:8px var(--pad) 0; background:rgba(255,215,0,.04); border:1px solid rgba(255,215,0,.15); border-radius:var(--radius-sm); padding:7px 13px; display:flex; align-items:center; gap:9px; position:relative; z-index:2; }
+.pulse-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 6px var(--gold); animation:pulseBlink 1s ease infinite; flex-shrink:0; }
+.pulse-text { font-size:9px; color:var(--gold); letter-spacing:.07em; flex:1; }
+.pulse-timer { font-size:10px; color:rgba(255,215,0,.65); font-weight:700; }
+
+/* Orb */
+.orb-zone { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; min-height:290px; }
+.orb-ambient { position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%); pointer-events:none; }
+.orb-ring { position:absolute; border-radius:50%; animation:orbSpin linear infinite; }
+.orb { width:120px; height:120px; border-radius:50%; background:radial-gradient(circle at 36% 30%,rgba(180,240,255,.88),rgba(0,160,210,.72) 45%,rgba(0,60,130,.98)); box-shadow:0 0 30px rgba(0,212,255,.35),0 0 60px rgba(0,212,255,.1); cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; transition:transform .08s; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+.orb:active { transform:scale(.91); }
+.orb-shine { position:absolute; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.22); top:14px; left:14px; filter:blur(4px); pointer-events:none; }
+
+/* Warrior card */
+.warrior-card { margin:10px var(--pad) 0; background:rgba(255,215,0,.03); border:1px solid rgba(255,215,0,.1); border-radius:var(--radius); padding:10px 13px; display:flex; align-items:center; gap:11px; position:relative; z-index:2; animation:goldPulse 4s ease infinite; }
+.warrior-avatar { width:40px; height:40px; border-radius:10px; background:rgba(255,215,0,.07); border:1px solid rgba(255,215,0,.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+/* Zone cards */
+.zone-card { border-radius:var(--radius-sm); overflow:hidden; position:relative; border:1px solid rgba(255,255,255,.06); cursor:pointer; }
+.zone-card.winning { border-color:rgba(255,215,0,.28); }
+.zone-card.my-zone { border-color:rgba(0,212,255,.22); }
+.zone-fill-bg { position:absolute; left:0; top:0; bottom:0; border-radius:var(--radius-sm); opacity:.065; }
+.zone-inner { padding:9px 12px; display:flex; align-items:center; gap:9px; position:relative; }
+
+/* Boss bar */
+.boss-card { border:1px solid rgba(255,60,0,.2); background:rgba(255,20,0,.03); border-radius:var(--radius-sm); padding:9px 13px; }
+.hp-track { background:rgba(255,60,0,.08); border-radius:4px; height:7px; overflow:hidden; border:1px solid rgba(255,60,0,.15); }
+.hp-fill { height:100%; background:linear-gradient(90deg,#ff3c00,#ff7722); border-radius:4px; transition:width 2s ease; }
+
+/* Capsule cards */
+.cap-card { border-radius:var(--radius); padding:12px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; overflow:hidden; cursor:pointer; border:1px solid; transition:transform .1s; -webkit-tap-highlight-color:transparent; }
+.cap-card:active { transform:scale(.96); }
+.cap-card::before { content:''; position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); width:70px; height:70px; border-radius:50%; opacity:.1; filter:blur(14px); }
+.cap-genesis { grid-column:1/-1; border-radius:var(--radius); border:2px solid rgba(255,215,0,.28); background:linear-gradient(135deg,rgba(25,16,0,.94),rgba(12,8,0,.96)); padding:12px 15px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:transform .1s; -webkit-tap-highlight-color:transparent; }
+.cap-genesis:active { transform:scale(.98); }
+
+/* Reveal overlay */
+.reveal-overlay { position:fixed; inset:0; z-index:200; background:rgba(2,2,10,.97); display:none; flex-direction:column; align-items:center; justify-content:center; gap:14px; }
+.reveal-overlay.visible { display:flex; }
+.gold-rain { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.gold-particle { position:absolute; width:2px; height:8px; border-radius:2px; background:var(--gold); opacity:0; animation:goldFall var(--dur,2s) var(--delay,0s) linear infinite; }
+
+/* Wallet */
+.wallet-hero { margin:10px var(--pad) 0; border-radius:var(--radius-lg); background:rgba(255,215,0,.03); border:1px solid rgba(255,215,0,.1); padding:18px; position:relative; overflow:hidden; z-index:2; animation:goldPulse 4s ease infinite; }
+
+/* Staking */
+.stake-tier { flex:1; padding:9px 4px; border-radius:10px; border:1px solid; cursor:pointer; text-align:center; transition:all .15s; -webkit-tap-highlight-color:transparent; background:none; font-family:var(--font-display); }
+
+/* Sanctum */
+.building-card { display:flex; align-items:center; gap:9px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+.building-card:last-child { border:none; }
+
+/* Bazaar */
+.relic-card { background:rgba(255,255,255,.02); border-radius:var(--radius); padding:11px 13px; margin-bottom:7px; border:1px solid; }
+
+/* Rank cards */
+.rank-card { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,.06); position:relative; overflow:hidden; }
+.rank-card.top-1 { border-color:rgba(255,215,0,.28); }
+.rank-card.top-2 { border-color:rgba(192,192,192,.22); }
+.rank-card.top-3 { border-color:rgba(205,127,50,.22); }
+.rank-card.is-me  { border-color:rgba(0,212,255,.2); }
+
+/* Tx rows */
+.tx-row { display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+.tx-row:last-child { border:none; }
+.tx-amount { font-family:var(--font-display); font-size:13px; font-weight:700; margin-left:auto; }
+.tx-amount.pos { color:#00ff9f; }
+.tx-amount.neg { color:#ff4444; }
+
+/* ═══════════ KEYFRAMES ═══════════ */
+@keyframes orbSpin  { to { transform:rotate(360deg); } }
+@keyframes pulseBlink { 0%,100%{opacity:1} 50%{opacity:.2} }
+@keyframes goldPulse { 0%,100%{box-shadow:0 0 12px rgba(255,215,0,.06)} 50%{box-shadow:0 0 28px rgba(255,215,0,.2)} }
+@keyframes floatUp  { 0%{opacity:0;transform:translate(0,0)} 20%{opacity:.7} 80%{opacity:.25} 100%{opacity:0;transform:translate(var(--tx,0px),var(--ty,-70px))} }
+@keyframes comboPop { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+@keyframes feedSlide{ from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+@keyframes goldFall { 0%{opacity:0;transform:translateY(-10px)} 10%{opacity:.9} 90%{opacity:.4} 100%{opacity:0;transform:translateY(100vh)} }
+@keyframes resultPop{ 0%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-60px) scale(.7)} }
+@keyframes shake    { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+@keyframes slideIn  { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+@keyframes starBlink{ 0%,100%{opacity:.2} 50%{opacity:.8} }
+
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg2); }
+::-webkit-scrollbar-thumb { background:rgba(255,215,0,.15); border-radius:3px; }
+.pb-safe { padding-bottom:env(safe-area-inset-bottom,0); }

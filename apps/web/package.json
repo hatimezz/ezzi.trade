@@ -1,0 +1,41 @@
+{
+  "name": "@ezzi/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.0",
+    "@ezzi/shared": "workspace:*",
+    "@gsap/react": "^2.1.0",
+    "@solana/web3.js": "^1.91.0",
+    "@tanstack/react-query": "^5.24.0",
+    "@tanstack/react-query-devtools": "^5.24.0",
+    "axios": "^1.6.7",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.0.0",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.344.0",
+    "next": "15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.12.0",
+    "socket.io-client": "^4.8.3",
+    "tailwind-merge": "^3.5.0",
+    "zustand": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.5.0"
+  }
+}

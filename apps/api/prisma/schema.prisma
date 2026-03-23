@@ -1,0 +1,306 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// CORE USER MODELS
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  username      String?   @unique
+  displayName   String?
+  avatarUrl     String?
+  isActive      Boolean   @default(true)
+  isAdmin       Boolean   @default(false)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  wallets       Wallet[]
+  sessions      Session[]
+  ownedNfts     NFT[]
+  listings      MarketplaceListing[] @relation("Seller")
+  capsuleOpenings CapsuleOpening[]
+  balance       UserBalance?
+  miningSessions MiningSession[]
+  presalePurchases PresalePurchase[]
+
+  @@index([email])
+  @@index([username])
+  @@index([isActive])
+}
+
+model Wallet {
+  id          String   @id @default(cuid())
+  userId      String
+  address     String   @unique
+  chain       String   @default("solana")
+  isPrimary   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([address])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  token        String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+// ============================================
+// NFT + MARKETPLACE MODELS
+// ============================================
+
+model Warrior {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  displayName   String
+  zone          String    // Zone as String: NEON_CITY, DESERT_STORM, etc.
+  rarity        String    // Rarity as String: common, rare, epic, legendary, mythic
+  basePrice     Float
+  totalSupply   Int
+  imageUrl      String
+  attack        Int       @default(0)
+  defense       Int       @default(0)
+  speed         Int       @default(0)
+  magic         Int       @default(0)
+  miningRate    Float     @default(1)
+  lore          String?
+  ability       String?
+  abilityDesc   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  nfts          NFT[]
+
+  @@index([zone])
+  @@index([rarity])
+}
+
+model NFT {
+  id            String    @id @default(cuid())
+  warriorId     String
+  tokenId       String?   @unique
+  editionNumber Int       @default(1)
+  ownerId       String?
+  durability    Int       @default(100)
+  saleCount     Int       @default(0)
+  isStaked      Boolean   @default(false)
+  metadataUri   String?
+  mintedAt      DateTime?
+  mintedBy      String?
+
+  warrior       Warrior   @relation(fields: [warriorId], references: [id])
+  owner         User?     @relation(fields: [ownerId], references: [id])
+  listing       MarketplaceListing?
+  miningSessions MiningSession[]
+
+  @@index([warriorId])
+  @@index([ownerId])
+  @@index([isStaked])
+}
+
+model MarketplaceListing {
+  id            String    @id @default(cuid())
+  nftId         String    @unique
+  sellerId      String
+  price         Float
+  priceUsd      Float?
+  status        String    @default("active") // active, sold, cancelled, expired
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  soldAt        DateTime?
+  buyerId       String?
+
+  nft           NFT       @relation(fields: [nftId], references: [id], onDelete: Cascade)
+  seller        User      @relation(fields: [sellerId], references: [id], onDelete: Cascade, name: "Seller")
+
+  @@index([sellerId])
+  @@index([status])
+  @@index([price])
+}
+
+// ============================================
+// MINING MODELS
+// ============================================
+
+model MiningSession {
+  id            String    @id @default(cuid())
+  userId        String
+  nftId         String
+  zone          String    // Zone as String
+  startedAt     DateTime  @default(now())
+  endedAt       DateTime?
+  earnedAmount  Float     @default(0)
+  status        String    @default("active") // active, paused, completed
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nft           NFT       @relation(fields: [nftId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([startedAt])
+}
+
+// ============================================
+// CAPSULE MODELS
+// ============================================
+
+model CapsuleTier {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  displayName   String
+  price         Float
+  totalSupply   Int
+  remaining     Int
+  commonRate    Int       @default(0)
+  rareRate      Int       @default(0)
+  epicRate      Int       @default(0)
+  legendaryRate Int       @default(0)
+  mythicRate    Int       @default(0)
+  ezziRate      Int       @default(0)
+  cssClass      String    @default("capsule-core")
+  animation     String    @default("rotate")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  openings      CapsuleOpening[]
+}
+
+model CapsuleOpening {
+  id            String      @id @default(cuid())
+  userId        String
+  capsuleTierId String
+  openedAt      DateTime    @default(now())
+  resultType    String      // nft or ezzi
+  resultId      String?
+  amount        Float?
+  rarity        String?     // common, rare, epic, legendary, mythic
+  txHash        String?
+  createdAt     DateTime    @default(now())
+
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  capsuleTier   CapsuleTier @relation(fields: [capsuleTierId], references: [id])
+
+  @@index([userId])
+  @@index([capsuleTierId])
+  @@index([resultType])
+}
+
+// ============================================
+// USER BALANCE MODEL
+// ============================================
+
+model UserBalance {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  ezziBalance   Float     @default(0)
+  totalMined    Float     @default(0)
+  totalEarned   Float     @default(0)
+  totalSpent    Float     @default(0)
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ============================================
+// TRANSACTION MODEL
+// ============================================
+
+model ProcessedTx {
+  id            String   @id @default(cuid())
+  txHash        String   @unique
+  type          String   // payment, withdrawal, reward, capsule_purchase, nft_purchase, nft_sale, presale_purchase
+  status        String   @default("pending") // pending, confirmed, failed
+  amount        Float
+  token         String   @default("SOL")
+  fromAddress   String
+  toAddress     String
+  userId        String?
+  metadata      String?  // JSON as String for SQLite
+  processedAt   DateTime @default(now())
+  confirmedAt   DateTime?
+  createdAt     DateTime @default(now())
+
+  @@index([txHash])
+  @@index([type])
+  @@index([status])
+  @@index([userId])
+  @@index([processedAt])
+}
+
+// ============================================
+// SITE SETTINGS (singleton)
+// ============================================
+
+model SiteSettings {
+  id                 String   @id @default("singleton")
+  maintenanceMode    Boolean  @default(false)
+  maintenanceMsg     String   @default("EZZI World is undergoing maintenance. Back soon.")
+  presaleActive      Boolean  @default(true)
+  presalePhase       Int      @default(1)
+  presalePrice       Float    @default(0.015)
+  presaleTarget      Float    @default(100000)
+  presaleRaised      Float    @default(0)
+  presaleEndDate     DateTime?
+  registrationOpen   Boolean  @default(true)
+  capsuleOpen        Boolean  @default(true)
+  marketplaceOpen    Boolean  @default(true)
+  announcementBar    String?
+  announcementActive Boolean  @default(false)
+  ezziPriceUsd       Float    @default(0.015)
+  solPriceUsd        Float    @default(100)
+  updatedAt          DateTime @updatedAt
+  updatedBy          String?
+}
+
+// ============================================
+// PRESALE
+// ============================================
+
+model PresalePurchase {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  walletAddress String
+  ezziAmount    Float
+  usdAmount     Float
+  solAmount     Float?
+  phase         Int      @default(1)
+  pricePerEzzi  Float
+  status        String   @default("confirmed")
+  txHash        String?  @unique
+  refCode       String?
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([phase])
+  @@index([status])
+  @@index([createdAt])
+}
