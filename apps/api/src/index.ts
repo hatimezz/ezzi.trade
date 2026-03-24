@@ -21,6 +21,7 @@ import { solanaNftRouter } from './routes/solana-nfts';
 import { solanaMarketplaceRouter } from './routes/solana-marketplace';
 import { webhookRouter } from './routes/webhooks';
 import { escrowRouter } from './routes/escrow';
+import { telegramRouter } from './routes/telegram';
 import { initializeSocket } from './lib/socket';
 import { logError, logInfo } from './lib/logger';
 
@@ -60,6 +61,7 @@ app.use('/api/solana/nfts', solanaNftRouter);
 app.use('/api/solana/marketplace', solanaMarketplaceRouter);
 app.use('/api/webhooks', webhookRouter);
 app.use('/api/escrow', escrowRouter);
+app.use('/api/telegram', telegramRouter);
 
 // 404 handler
 app.use((_req: express.Request, res: express.Response): void => {

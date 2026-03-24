@@ -176,6 +176,7 @@ model User {
   tier            String    @default("FREE")
   isActive        Boolean   @default(true)
   isAdmin         Boolean   @default(false)
+  telegramId      String?   @unique
   suspendedAt     DateTime?
   suspendedUntil  DateTime?
   suspendedReason String?
@@ -204,6 +205,7 @@ model User {
   @@index([isActive])
   @@index([tier])
   @@index([country])
+  @@index([telegramId])
 }
 
 model Wallet {
