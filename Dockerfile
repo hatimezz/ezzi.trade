@@ -4,7 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install OpenSSL for Prisma
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl libc6-compat
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -15,6 +15,7 @@ COPY apps/api/package.json ./apps/api/
 COPY packages/shared/package.json ./packages/shared/
 
 # Install dependencies
+ENV PRISMA_SKIP_POSTINSTALL_GENERATE=true
 RUN pnpm install --frozen-lockfile
 
 # Copy source code
@@ -23,8 +24,8 @@ COPY . .
 # Build shared package
 RUN pnpm --filter @ezzi/shared build
 
-# Generate Prisma client (needs dev dependencies)
-RUN cd apps/api && pnpm exec prisma generate
+# Generate Prisma client
+RUN npx prisma@5 generate --schema=packages/shared/prisma/schema.prisma
 
 # Build API
 RUN pnpm --filter @ezzi/api build
@@ -35,7 +36,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 # Install OpenSSL for Prisma
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl libc6-compat
 
 # Install pnpm
 RUN npm install -g pnpm
