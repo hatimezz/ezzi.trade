@@ -10,6 +10,8 @@ on:
       - 'Dockerfile'
       - 'fly.toml'
       - '.dockerignore'
+      - '.github/workflows/fly-deploy.yml'
+  workflow_dispatch:
 
 jobs:
   deploy:
