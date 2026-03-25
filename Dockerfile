@@ -45,7 +45,7 @@ COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
 
 # Generate Prisma client
-RUN cd apps/api && npx prisma generate
+RUN cd apps/api && pnpm exec prisma generate
 
 # Expose port
 EXPOSE 3001
